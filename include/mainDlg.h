@@ -4,6 +4,9 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_hvg_main.h"
 
+// controllers
+#include "mainController.h"
+
 class MainDlg : public QMainWindow
 {
 	Q_OBJECT
@@ -14,6 +17,8 @@ public:
 
 private:
 	Ui::MainDlgClass ui;
+
+	Controller* _activeController;		///< Running controller
 
 };
 

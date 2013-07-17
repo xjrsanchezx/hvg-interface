@@ -2,6 +2,12 @@ cmake_minimum_required ( VERSION 2.8.8 )
 
 PROJECT( hvg_interface )
 
+SET ( HVG_PATH ${CMAKE_SOURCE_DIR}//data/ CACHE PATH "The directory with the games")
+
+# config file
+configure_file ("${PROJECT_SOURCE_DIR}/include/config.h.in"
+                "${PROJECT_SOURCE_DIR}/include/config.h" )
+
 # Instruct CMake to run moc automatically when needed.
 SET(CMAKE_AUTOMOC ON)
 # As moc files are generated in the binary dir, tell CMake
@@ -15,10 +21,16 @@ SET( QT_USE_QTWEBKIT TRUE )
 SET( HVG_INTERFACE_SRC
 	src/main.cpp	
 	src/mainDlg.cpp
+	src/mainController.cpp
+	src/mainModel.cpp
 )
 
 SET( HVG_INTERFACE_H
+	include/config.h
 	include/mainDlg.h
+	include/controller.h
+	include/mainController.h
+	include/mainModel.h
 )
 
 SET( HVG_INTERFACE_FORMS
