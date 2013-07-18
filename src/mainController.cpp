@@ -1,12 +1,15 @@
 #include "mainController.h"
 #include <iostream>
 
-void MainController::run()
+ViewParams* MainController::run()
 {
 	// get the list of machines
 	QStringList machines;
 
 	_model.getMachines(machines);
+	_params.setMachines(machines);
 
 	std::cout << machines.size();
+
+	return &_params;
 }

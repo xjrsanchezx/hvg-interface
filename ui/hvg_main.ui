@@ -25,7 +25,7 @@
     </property>
     <property name="url">
      <url>
-      <string>http://www.google.es</string>
+      <string>about:blank</string>
      </url>
     </property>
    </widget>
@@ -59,7 +59,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="sampleweb.qrc"/>
+  <include location="../resources/hvg.qrc"/>
  </resources>
  <connections/>
 </ui>

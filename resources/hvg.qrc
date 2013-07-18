@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="/hvg_interface">        
+    <qresource prefix="/hvg_interface">
+        <file>mainView.html</file>
+        <file>mainView.js</file>
     </qresource>
 </RCC>

@@ -16,10 +16,17 @@ public:
 	~MainDlg();
 
 private:
+	
+
+public slots:
+	void addJSObject();
+	void loadFinished(bool ok);
+
+private:
 	Ui::MainDlgClass ui;
 
 	Controller* _activeController;		///< Running controller
-
+	ViewParams* _params;
 };
 
 #endif // MAINDLG_H
