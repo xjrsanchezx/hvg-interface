@@ -2,5 +2,7 @@
     <qresource prefix="/hvg_interface">
         <file>mainView.html</file>
         <file>mainView.js</file>
+        <file>jquery-2.0.3.min.js</file>
+        <file>style.css</file>
     </qresource>
 </RCC>

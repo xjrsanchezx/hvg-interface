@@ -33,11 +33,16 @@ private:
 */
 class MainController : public Controller
 {
+	Q_OBJECT
+
 public:
 	MainController() {};
 	~MainController() {};
 
 	ViewParams* run();
+
+public slots:
+	void elementActivated(QString id);
 
 private:
 	MainModel _model;		///< Data model

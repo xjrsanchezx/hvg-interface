@@ -1,7 +1,18 @@
-	var msg = params.machines.length;
-//	alert(msg);
+$( document ).ready(function() {
 
 	for(var i=0; i<params.machines.length; i++) {
-		document.write(params.machines[i]);
-		document.write("<br>");
+		$('<a>',{
+			text: params.machines[i],			
+			href: '#',
+			click: function(){emit();}
+		}).appendTo("#machines");
+		
+		$('<br>').appendTo("#machines");	
+	}
+});
+	
+	
+	
+	function emit()	{
+		controller.elementActivated('hola');
 	}

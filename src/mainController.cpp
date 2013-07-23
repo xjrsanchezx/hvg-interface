@@ -13,3 +13,10 @@ ViewParams* MainController::run()
 
 	return &_params;
 }
+
+void MainController::elementActivated(QString id)
+{
+	std::cout << id.toUtf8().constData() << std::endl;
+
+	emit newControllerRequested("hello");
+}

@@ -2,6 +2,7 @@
 #define MAINDLG_H
 
 #include <QtWidgets/QMainWindow>
+#include <QtWebKitWidgets\qwebview.h>
 #include "ui_hvg_main.h"
 
 // controllers

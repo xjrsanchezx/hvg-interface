@@ -7,6 +7,9 @@ MainDlg::MainDlg(QWidget *parent /*= 0*/)
 {
 	ui.setupUi(this);	
 
+	// force the signal linkClicked to be called when clicking
+	ui.webView->page()->setLinkDelegationPolicy(QWebPage::LinkDelegationPolicy::DelegateAllLinks);
+
 	// Signal is emitted before frame loads any web content:
     QObject::connect((QObject*)ui.webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
                      this, SLOT(addJSObject()) );
@@ -32,7 +35,12 @@ MainDlg::~MainDlg()
 */
 void MainDlg::addJSObject()
 {
+	// parameters for the rendering
 	ui.webView->page()->mainFrame()->addToJavaScriptWindowObject( QString("params"), _params );
+
+	// pass the controller object to be able to call its signals
+	ui.webView->page()->mainFrame()->addToJavaScriptWindowObject( QString("controller"), _activeController );
+
 	int a=0;
 }
 
