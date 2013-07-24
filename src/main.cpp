@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv);
 	MainDlg dlg;
 
-	dlg.show();
+	dlg.showMaximized();
 
 	return a.exec();
 }

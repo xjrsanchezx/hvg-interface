@@ -3,6 +3,9 @@
 
 #include <QObject>
 
+#include "factory.h"
+
+
 /**
 * Base class for the parameters that will be sent to the web view from the controller
 */
@@ -36,5 +39,9 @@ public slots:
 signals:
 	void newControllerRequested(QString controller);	///< emitted when the controller requests to give up the controll to other controller
 };
+
+
+// controllers can be created using a factory pattern
+typedef Factory<Controller, std::string> ControllerrFactory;
 
 #endif // CONTROLLER_H

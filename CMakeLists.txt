@@ -27,6 +27,7 @@ SET( HVG_INTERFACE_SRC
 
 SET( HVG_INTERFACE_H
 	include/config.h
+	include/factory.h
 	include/mainDlg.h
 	include/controller.h
 	include/mainController.h

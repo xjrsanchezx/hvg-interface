@@ -1,6 +1,7 @@
 #include "mainDlg.h"
 #include <qwebframe.h>
 #include <iostream>
+#include "config.h"
 
 MainDlg::MainDlg(QWidget *parent /*= 0*/)
 	: QMainWindow(parent)
@@ -8,7 +9,7 @@ MainDlg::MainDlg(QWidget *parent /*= 0*/)
 	ui.setupUi(this);	
 
 	// force the signal linkClicked to be called when clicking
-	ui.webView->page()->setLinkDelegationPolicy(QWebPage::LinkDelegationPolicy::DelegateAllLinks);
+//	ui.webView->page()->setLinkDelegationPolicy(QWebPage::LinkDelegationPolicy::DelegateAllLinks);
 
 	// Signal is emitted before frame loads any web content:
     QObject::connect((QObject*)ui.webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
@@ -18,7 +19,10 @@ MainDlg::MainDlg(QWidget *parent /*= 0*/)
 	QObject::connect((QObject*)ui.webView, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
 
 	// initially load the main controller
-	_activeController = new MainController();
+	_activeController = ControllerrFactory::Instance().CreateObject("MainController");
+	// connect signals
+	QObject::connect( _activeController, SIGNAL(newControllerRequested(QString )), this, SLOT(newControllerRequested(QString )));
+
 	_params = _activeController->run();
 
 	// launch the view
@@ -48,4 +52,13 @@ void MainDlg::loadFinished(bool ok)
 {
 	if(!ok)
 		std::cerr << "Error loading the view!!" << std::endl;
+}
+
+void MainDlg::newControllerRequested(QString controller)
+{
+	std::cout << controller.toUtf8().constData() << std::endl;
+
+	QString url = QString(HVG_PATH)+"\\"+controller+"\\html\\"+controller+".htm";
+
+	ui.webView->setUrl( QUrl::fromLocalFile(url) );
 }

@@ -23,6 +23,8 @@ public slots:
 	void addJSObject();
 	void loadFinished(bool ok);
 
+	void newControllerRequested(QString controller);	///< emited by controllers
+
 private:
 	Ui::MainDlgClass ui;
 
