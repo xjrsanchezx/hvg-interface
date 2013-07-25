@@ -16,10 +16,8 @@ public:
 
 	QString getViewURL() const {return QString("mainView.html");};
 
-	Q_PROPERTY(QString title READ hola)
 	Q_PROPERTY(QStringList machines READ getMachines WRITE setMachines);
 
-	Q_INVOKABLE  QString hola() {return QString("hola world");};	
 	Q_INVOKABLE  QStringList getMachines() const { return _machines; };
 	Q_INVOKABLE  void setMachines(QStringList& list) {_machines = list; };
 

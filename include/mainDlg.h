@@ -6,7 +6,7 @@
 #include "ui_hvg_main.h"
 
 // controllers
-#include "mainController.h"
+#include "controller.h"
 
 class MainDlg : public QMainWindow
 {
@@ -23,7 +23,10 @@ public slots:
 	void addJSObject();
 	void loadFinished(bool ok);
 
-	void newControllerRequested(QString controller);	///< emited by controllers
+	void newControllerRequested(QString controller, QStringMap params);	///< emited by controllers
+
+private:
+	void changeActiveController(const QString& controller, const QStringMap& params);
 
 private:
 	Ui::MainDlgClass ui;

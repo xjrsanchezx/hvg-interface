@@ -23,9 +23,7 @@ ViewParams* MainController::run()
 
 	_model.getMachines(machines);
 	_params.setMachines(machines);
-
-	std::cout << machines.size();
-
+	
 	return &_params;
 }
 
@@ -34,5 +32,10 @@ ViewParams* MainController::run()
 */
 void MainController::elementActivated(QString id)
 {
-	emit newControllerRequested(id);
+	// request to launch the InfoController with the specified machine
+	// build the parameters map
+	QStringMap params;
+	params["machine"] = id;
+
+	emit newControllerRequested("InfoController", params);
 }

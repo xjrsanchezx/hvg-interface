@@ -22,6 +22,7 @@ SET( HVG_INTERFACE_SRC
 	src/main.cpp	
 	src/mainDlg.cpp
 	src/mainController.cpp
+	src/infoController.cpp
 	src/mainModel.cpp
 )
 
@@ -31,6 +32,7 @@ SET( HVG_INTERFACE_H
 	include/mainDlg.h
 	include/controller.h
 	include/mainController.h
+	include/infoController.h
 	include/mainModel.h
 )
 

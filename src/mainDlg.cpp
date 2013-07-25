@@ -6,10 +6,14 @@
 MainDlg::MainDlg(QWidget *parent /*= 0*/)
 	: QMainWindow(parent)
 {
+#ifdef _DEBUG
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+#endif
+
 	ui.setupUi(this);	
 
 	// force the signal linkClicked to be called when clicking
-//	ui.webView->page()->setLinkDelegationPolicy(QWebPage::LinkDelegationPolicy::DelegateAllLinks);
+	ui.webView->page()->setLinkDelegationPolicy(QWebPage::LinkDelegationPolicy::DontDelegateLinks);
 
 	// Signal is emitted before frame loads any web content:
     QObject::connect((QObject*)ui.webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
@@ -18,15 +22,10 @@ MainDlg::MainDlg(QWidget *parent /*= 0*/)
 	// signal emitted after loading the page
 	QObject::connect((QObject*)ui.webView, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
 
+	_activeController = NULL;
+
 	// initially load the main controller
-	_activeController = ControllerrFactory::Instance().CreateObject("MainController");
-	// connect signals
-	QObject::connect( _activeController, SIGNAL(newControllerRequested(QString )), this, SLOT(newControllerRequested(QString )));
-
-	_params = _activeController->run();
-
-	// launch the view
-	ui.webView->setUrl("qrc:/hvg_interface/" + _params->getViewURL() );	
+	changeActiveController( "MainController", QStringMap() );
 }
 
 MainDlg::~MainDlg()
@@ -45,7 +44,8 @@ void MainDlg::addJSObject()
 	// pass the controller object to be able to call its signals
 	ui.webView->page()->mainFrame()->addToJavaScriptWindowObject( QString("controller"), _activeController );
 
-	int a=0;
+	ui.webView->page()->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,true);
+//	ui.webView->page()->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls,true);
 }
 
 void MainDlg::loadFinished(bool ok)
@@ -54,11 +54,25 @@ void MainDlg::loadFinished(bool ok)
 		std::cerr << "Error loading the view!!" << std::endl;
 }
 
-void MainDlg::newControllerRequested(QString controller)
+void MainDlg::newControllerRequested(QString controller, QStringMap params)
 {
-	std::cout << controller.toUtf8().constData() << std::endl;
+	changeActiveController(controller, params);
+}
 
-	QString url = QString(HVG_PATH)+"\\"+controller+"\\html\\"+controller+".htm";
+void MainDlg::changeActiveController(const QString& controller, const QStringMap& params)
+{
+	// remove the active controller and disconnect the slot
+	QObject::disconnect(this, SLOT(newControllerRequested(QString, QStringMap)));
+	delete _activeController;	
 
-	ui.webView->setUrl( QUrl::fromLocalFile(url) );
+	// create the new controller
+	_activeController = ControllerrFactory::Instance().CreateObject( controller.toUtf8().constData() );
+	_activeController->setParams(params);
+	// connect signals
+	QObject::connect( _activeController, SIGNAL(newControllerRequested(QString, QStringMap)), this, SLOT(newControllerRequested(QString, QStringMap)));
+
+	_params = _activeController->run();
+
+	// launch the view
+	ui.webView->setUrl("qrc:/hvg_interface/" + _params->getViewURL() );	
 }

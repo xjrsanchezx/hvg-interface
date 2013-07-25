@@ -4,5 +4,7 @@
         <file>mainView.js</file>
         <file>jquery-2.0.3.min.js</file>
         <file>style.css</file>
+        <file>infoView.html</file>
+        <file>infoView.js</file>
     </qresource>
 </RCC>
