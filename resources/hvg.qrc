@@ -6,5 +6,7 @@
         <file>style.css</file>
         <file>infoView.html</file>
         <file>infoView.js</file>
+        <file>gameListView.html</file>
+        <file>gameListView.js</file>
     </qresource>
 </RCC>

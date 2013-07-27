@@ -23,7 +23,9 @@ SET( HVG_INTERFACE_SRC
 	src/mainDlg.cpp
 	src/mainController.cpp
 	src/infoController.cpp
+	src/gameListController.cpp	
 	src/mainModel.cpp
+	src/gameListModel.cpp
 )
 
 SET( HVG_INTERFACE_H
@@ -33,7 +35,9 @@ SET( HVG_INTERFACE_H
 	include/controller.h
 	include/mainController.h
 	include/infoController.h
+	include/gameListController.h
 	include/mainModel.h
+	include/gameListModel.h
 )
 
 SET( HVG_INTERFACE_FORMS
@@ -52,4 +56,4 @@ SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
 ADD_EXECUTABLE (hvg_interface ${HVG_INTERFACE_SRC} ${HVG_INTERFACE_H} ${UIS_HDRS} ${HVG_RES}) 
 
-qt5_use_modules(hvg_interface Widgets WebKitWidgets)
+qt5_use_modules(hvg_interface Widgets WebKitWidgets Sql)

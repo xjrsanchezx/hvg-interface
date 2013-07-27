@@ -4,7 +4,7 @@
 #include "controller.h"
 
 /**
-* Parameters that will be sent to the mainView 
+* Parameters that will be sent to the machine info view 
 */
 class InfoViewParams : public ViewParams
 {
@@ -17,7 +17,7 @@ public:
 
 	Q_PROPERTY(QString machineURL READ getMachineURL WRITE setMachineURL)	
 
-	Q_INVOKABLE  QString getMachineURL() {return _machineURL;};	
+	Q_INVOKABLE  QString getMachineURL() const {return _machineURL;};	
 	Q_INVOKABLE  void setMachineURL(QString& url) {_machineURL = url; };
 	
 private:

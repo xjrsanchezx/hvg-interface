@@ -48,13 +48,19 @@ void InfoController::setParams(const QStringMap& params)
 */
 void InfoController::elementActivated(QString id)
 {
-	if(id =="back")
+	if(id =="back")	// go back to the initial window
 	{
 		emit newControllerRequested("MainController", QStringMap() );
 	}
 	
-	else if(id == "forward")
+	else if(id == "forward") // go to the list of games
+	{
+		QStringMap params;
+		params["machine"] = _machine;
+
+		emit newControllerRequested("GameListController", params);
 		return;
+	}
 
 	else
 	{

@@ -6,7 +6,7 @@
 /**
 * \param[out] machines A vector with the names of existing machines
 */
-void MainModel::getMachines(QStringList& machines)
+void MainModel::getMachines(QStringList& machines) const
 {
 	// open the hvg directory and look for all directories containing a game database
 	 QDir hvgDir(HVG_PATH);

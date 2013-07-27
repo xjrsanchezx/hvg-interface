@@ -6,7 +6,7 @@
 class MainModel
 {
 public:
-	void getMachines(QStringList& machines);				///< Gets the list of machines
+	void getMachines(QStringList& machines) const;				///< Gets the list of machines
 };
 
 #endif //MAIN_MODEL_H
