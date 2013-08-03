@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2013 xjrsanchezx@yahoo.es
+ *
+ * Use of this source code is governed by The MIT License (MIT) license 
+ * that can be found in the LICENSE file.
+ */
+
+/** \file
+ * \brief The window that contains the web browser
+ *
+ * \author xjrsanchezx@yahoo.es (Jairo R. Sánchez)
+ * \copyright MIT License (MIT)
+ */
+
 #ifndef MAINDLG_H
 #define MAINDLG_H
 

@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2013 xjrsanchezx@yahoo.es
+ *
+ * Use of this source code is governed by The MIT License (MIT) license 
+ * that can be found in the LICENSE file.
+ */
+
+/** \file
+ * \brief The controller of the machine information screen.
+ *
+ * \author xjrsanchezx@yahoo.es (Jairo R. Sánchez)
+ * \copyright MIT License (MIT)
+ */
+
 #ifndef INFO_CONTROLLER_H
 #define INFO_CONTROLLER_H
 
