@@ -2,7 +2,7 @@ REQUIREMENTS
 ============
 CMake 2.8.11
 Qt 5.0
-
+HVG (http://hvg-historyofvideogames.blogspot.com.es/)
 
 BUILD
 =====
@@ -12,4 +12,4 @@ Generate the project and build. Tested with VS2010
 
 
 Jairo
-xjrsanchezx@gmail.com
+xjrsanchezx@yahoo.es
