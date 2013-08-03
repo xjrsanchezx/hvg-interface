@@ -18,6 +18,20 @@ namespace
 }
 ////////////////////////////////////////////
 
+GameListController::GameListController()
+{
+	_emulatorProcess = NULL;
+}
+
+GameListController::~GameListController()
+{
+	if( _emulatorProcess )
+	{
+		_emulatorProcess->close();
+		delete _emulatorProcess;
+	}
+}
+
 ViewParams* GameListController::run()
 {		
 	GameListModel model;
@@ -57,5 +71,21 @@ void GameListController::elementActivated(QString id)
 		params["machine"] = _machine;
 
 		emit newControllerRequested("InfoController", params);
+	}
+
+	else		// try to launch the emulator. The id is the selected game
+	{
+		GameListModel model;
+
+		QString rom = QString("\"") + model.getRomPathFromName( _machine, id ) + "\"";
+		QString emulator = model.getEmulatorPath( _machine );
+
+		// launch the emulator	
+		delete _emulatorProcess;
+		_emulatorProcess = new QProcess();
+		QStringList arguments;
+		arguments << rom;
+
+		_emulatorProcess->start(emulator, arguments);
 	}
 }

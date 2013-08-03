@@ -4,6 +4,8 @@
 #include "controller.h"
 #include "gameListModel.h"
 
+#include <QProcess>
+
 /**
 * Parameters that will be sent to the game list view 
 */
@@ -40,8 +42,8 @@ class GameListController : public Controller
 	Q_OBJECT
 
 public:
-	GameListController() {};
-	~GameListController() {};
+	GameListController();
+	~GameListController();
 
 	ViewParams* run();
 	void setParams(const QStringMap& params);
@@ -52,6 +54,8 @@ public slots:
 private:
 	GameListViewParams _params;			///< The params to pass to the view
 	QString _machine;					///< The name of the selected machine
+
+	 QProcess *_emulatorProcess;		///< The process of the emulator
 };
 
 
