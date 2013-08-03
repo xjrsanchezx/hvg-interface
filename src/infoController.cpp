@@ -14,6 +14,7 @@
 #include "infoController.h"
 #include "config.h"
 #include <iostream>
+#include <QDir>
 #include <QUrl>
 
 // register the controller into the factory
@@ -35,6 +36,8 @@ ViewParams* InfoController::run()
 {	
 	// construct the url using the name of the machine
 	QString url = QString(HVG_PATH) + "/" + _machine + "/html/" + _machine + ".htm";
+	url = QDir(url).absolutePath();	// remove relative paths as the view expects absolute paths
+
 	_params.setMachineURL( QUrl(url).url() );
 
 	return &_params;
