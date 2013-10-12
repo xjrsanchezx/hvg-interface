@@ -35,10 +35,19 @@ namespace
 ViewParams* InfoController::run()
 {	
 	// construct the url using the name of the machine
-	QString url = QString(HVG_PATH) + "/" + _machine + "/html/" + _machine + ".htm";
-	url = QDir(url).absolutePath();	// remove relative paths as the view expects absolute paths
+	QString infoURL = _model.getInfoURL( _machine );
 
-	_params.setMachineURL( QUrl(url).url() );
+	// chek if empty
+	if(infoURL != "")
+	{			
+		infoURL = QDir(infoURL).absolutePath();	// remove relative paths as the view expects absolute paths
+		_params.setMachineURL( QUrl(infoURL).url() );
+	}
+/*	else	// simulate that the user has pressed forward to load the game list directly
+	{
+		_params.setMachineURL(QString());
+		elementActivated("forward");
+	}*/
 
 	return &_params;
 }
@@ -50,13 +59,14 @@ ViewParams* InfoController::run()
 */
 void InfoController::setParams(const QStringMap& params)
 {
-	if( !params.contains("machine") )
+	if( !params.contains("machine") || !params.contains("machine"))
 	{
-		std::cerr << "InfoController: Parameter 'machine' not found" << std::endl;
+		std::cerr << "InfoController: Required parameter not found" << std::endl;
 		return;
 	}
 
 	_machine = params["machine"];
+	_model.setDatabaseFile( params["db"] );
 }
 
 /**
@@ -73,6 +83,7 @@ void InfoController::elementActivated(QString id)
 	{
 		QStringMap params;
 		params["machine"] = _machine;
+		params["db"] = _model.getMachineDB();
 
 		emit newControllerRequested("GameListController", params);
 		return;

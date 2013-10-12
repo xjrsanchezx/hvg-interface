@@ -46,10 +46,9 @@ GameListController::~GameListController()
 
 ViewParams* GameListController::run()
 {		
-	GameListModel model;
 	GameList availableGames;
 
-	model.getGames( _machine, availableGames );
+	_model.getGames( _machine, availableGames );
 
 	_params.setGameList(availableGames);
 
@@ -63,13 +62,14 @@ ViewParams* GameListController::run()
 */
 void GameListController::setParams(const QStringMap& params)
 {
-	if( !params.contains("machine") )
+	if( !params.contains("machine") || !params.contains("db"))
 	{
-		std::cerr << "GameListController: Parameter 'machine' not found" << std::endl;
+		std::cerr << "GameListController: Required parameter not found" << std::endl;
 		return;
 	}
 
 	_machine = params["machine"];
+	_model.setDatabaseFile( params["db"] );
 }
 
 /**
@@ -80,9 +80,8 @@ void GameListController::elementActivated(QString id)
 	if(id =="back")	// go back to the initial window
 	{
 		QStringMap params;
-		params["machine"] = _machine;
 
-		emit newControllerRequested("InfoController", params);
+		emit newControllerRequested("MainController", params);
 	}
 
 	else		// try to launch the emulator. The id is the selected game

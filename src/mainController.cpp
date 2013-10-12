@@ -49,6 +49,7 @@ void MainController::elementActivated(QString id)
 	// build the parameters map
 	QStringMap params;
 	params["machine"] = id;
+	params["db"] = _model.getMachineDB(id);
 
 	emit newControllerRequested("InfoController", params);
 }

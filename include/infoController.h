@@ -16,6 +16,7 @@
 #define INFO_CONTROLLER_H
 
 #include "controller.h"
+#include "infoModel.h"
 
 /**
 * Parameters that will be sent to the machine info view 
@@ -42,8 +43,7 @@ private:
 
 /**
 * The controller of the machine information screen. This window displays 
-* the webpage with the info of the machine. It is a very simple controller
-* so it does not have a model associated.
+* the webpage with the info of the machine.
 */
 class InfoController : public Controller
 {
@@ -61,6 +61,7 @@ public slots:
 
 private:
 	InfoViewParams _params;			///< The params to pass to the view
+	InfoModel _model;				///< data model
 	QString _machine;				///< The name of the selected machine
 };
 

@@ -68,6 +68,7 @@ public slots:
 
 private:
 	GameListViewParams _params;			///< The params to pass to the view
+	GameListModel _model;				///< The data model
 	QString _machine;					///< The name of the selected machine
 
 	 QProcess *_emulatorProcess;		///< The process of the emulator
