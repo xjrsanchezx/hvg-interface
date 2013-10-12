@@ -45,12 +45,12 @@ public:
 	void setDatabaseFile(const QString& dbFileName) { _dbFileName = dbFileName; };
 	QString getMachineDB() const { return _dbFileName; };
 
-	void getGames(const QString& machine, GameList& games) const;						///< Gets the list of games
-	QString getRomPathFromName(const QString& machine, const QString& romName) const;	///< Gets the path of a game
-	QString getEmulatorPath(const QString& machine) const;								///< Gets the path to the emulator
+	void getGames(GameList& games) const;						///< Gets the list of games
+	QString getRomPathFromName(const QString& romName) const;	///< Gets the path of a game
+	QString getEmulatorPath() const;							///< Gets the path to the emulator
 
 private:
-	bool connectDB(const QString& machine, QSqlDatabase** db) const;	///< Opens a connection to a DB
+	bool connectDB(QSqlDatabase** db) const;	///< Opens a connection to a DB
 
 private:
 	QString _dbFileName;

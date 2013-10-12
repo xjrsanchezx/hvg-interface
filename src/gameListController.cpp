@@ -48,7 +48,7 @@ ViewParams* GameListController::run()
 {		
 	GameList availableGames;
 
-	_model.getGames( _machine, availableGames );
+	_model.getGames( availableGames );
 
 	_params.setGameList(availableGames);
 
@@ -85,18 +85,16 @@ void GameListController::elementActivated(QString id)
 	}
 
 	else		// try to launch the emulator. The id is the selected game
-	{
-		GameListModel model;
-
-		QString rom = QString("\"") + model.getRomPathFromName( _machine, id ) + "\"";
-		QString emulator = model.getEmulatorPath( _machine );
+	{		
+		QString rom = _model.getRomPathFromName( id );
+		QString emulator = _model.getEmulatorPath();
 
 		// launch the emulator	
 		delete _emulatorProcess;
 		_emulatorProcess = new QProcess();
 		QStringList arguments;
 		arguments << rom;
-
+			
 		_emulatorProcess->start(emulator, arguments);
 	}
 }

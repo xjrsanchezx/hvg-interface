@@ -18,7 +18,7 @@
 
 #include <iostream>
 
-bool GameListModel::connectDB(const QString& machine, QSqlDatabase** db) const
+bool GameListModel::connectDB(QSqlDatabase** db) const
 {	
 	// Find QSLite driver and create the file
 	*db = new QSqlDatabase( QSqlDatabase::addDatabase("QSQLITE") );
@@ -28,7 +28,7 @@ bool GameListModel::connectDB(const QString& machine, QSqlDatabase** db) const
 	// Open the database
 	if (!(*db)->open()) 
 	{
-		std::cerr << "GameListModel: Game database not found!" << std::endl;
+		std::cerr << "GameListModel: Game database not found! " << _dbFileName.toStdString() << std::endl;
 		CLOSE_DB(*db)
 
 		return false;
@@ -40,16 +40,15 @@ bool GameListModel::connectDB(const QString& machine, QSqlDatabase** db) const
 /**
 * Gets the complete info of videogames for a given machine
 *
-* \param[in] machine The name of the machine
 * \param[out] games The list of available games
 */
-void GameListModel::getGames(const QString& machine, GameList& games)  const
+void GameListModel::getGames(GameList& games)  const
 {
 	games.clear();
 	
 	QSqlDatabase *db;
 
-	if( !connectDB(machine, &db) )
+	if( !connectDB(&db) )
 		return;
 
 	QSqlQuery query("SELECT name, rom FROM games");
@@ -70,18 +69,17 @@ void GameListModel::getGames(const QString& machine, GameList& games)  const
 }
 
 /**
-* \param[in] machine The name of the machine
 * \param[in] romName The name of the game
 * \returns The full path to the rom. It may not exist!
 */
-QString GameListModel::getRomPathFromName(const QString& machine, const QString& romName) const
+QString GameListModel::getRomPathFromName(const QString& romName) const
 {
 	QSqlDatabase *db;
 
-	if( !connectDB(machine, &db) )
+	if( !connectDB(&db) )
 		return "";
 
-	QString queryString = "SELECT rom FROM games WHERE NOMBRE = :romName";
+	QString queryString = "SELECT rom FROM games WHERE name = :romName";
 
 	QSqlQuery query;
 	query.prepare(queryString);
@@ -91,26 +89,60 @@ QString GameListModel::getRomPathFromName(const QString& machine, const QString&
 	QString path = "";
 
 	if(query.next() )
-		path =  QString(HVG_PATH"/") + machine + "/games/" + query.value(0).toString();
+		path = query.value(0).toString();
 	
 	query.clear();
+
+	// get the rom folder
+	queryString = "SELECT romFolder FROM machine";
+	query.prepare(queryString);
+	query.exec();
+
+	QString romFolder = "";
+
+	if(query.next() )
+		romFolder = query.value(0).toString();
+	
+	query.clear();
+
 	CLOSE_DB(db)
+
+	if(path == "") return "";
+
+	QDir dbPath = QFileInfo(_dbFileName).absoluteDir();
+	path =  dbPath.absolutePath() + "/" + romFolder + "/" + path;
 
 	return path;
 }
 
-QString GameListModel::getEmulatorPath(const QString& machine) const
+QString GameListModel::getEmulatorPath() const
 {
-	// they are under c:\hvg\hvgn directory	where n is the recopilation number
-	// the easiest way is to open again the database
-/*	QSqlDatabase db;
+	QSqlDatabase *db;
 
-	if( !connectDB(machine, db) )
+	if( !connectDB(&db) )
 		return "";
 
-	// The name of the table is HVGn where n is the recopilation number
-	QString tableName = (db.tables())[0];
+	QString queryString = "SELECT emulator FROM machine";
 
-	return QString("c:/hvg/") + tableName.toLower() + "/" + machine.toLower() + "/emulator/loader_" + machine.toLower() + ".exe";*/
-	return "";
+	QSqlQuery query;
+	query.prepare(queryString);	
+	query.exec();
+
+	QString path = "";
+	
+	if(query.next() )
+	{
+		path = query.value(0).toString();
+	}
+
+	query.clear();
+	
+	CLOSE_DB(db)
+
+	if(path == "") return "";
+		
+	QDir dbPath = QFileInfo(_dbFileName).absoluteDir();
+	path =  dbPath.absolutePath() + "/" + path;
+
+	return path;
 }

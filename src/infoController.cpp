@@ -43,11 +43,6 @@ ViewParams* InfoController::run()
 		infoURL = QDir(infoURL).absolutePath();	// remove relative paths as the view expects absolute paths
 		_params.setMachineURL( QUrl(infoURL).url() );
 	}
-/*	else	// simulate that the user has pressed forward to load the game list directly
-	{
-		_params.setMachineURL(QString());
-		elementActivated("forward");
-	}*/
 
 	return &_params;
 }
